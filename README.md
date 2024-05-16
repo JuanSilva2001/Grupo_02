@@ -1,2 +1,3 @@
-# Grupo_02
-TCC com foco em detectar possiveis plagios de musica
+# Grupo 02 - Terminator 🤖🔥
+
+TCC com foco em detectar possiveis plagios de musica.
