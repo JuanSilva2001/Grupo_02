@@ -177,6 +177,11 @@ Resources:
           systemctl daemon-reload
           systemctl start jupyter
           systemctl enable jupyter
+          yum install -y curl tar
+          curl -L https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o /tmp/ffmpeg-release-amd64-static.tar.xz
+          tar -xvf /tmp/ffmpeg-release-amd64-static.tar.xz -C /tmp
+          cp /tmp/ffmpeg-*-amd64-static/ffmpeg /usr/local/bin/
+          cp /tmp/ffmpeg-*-amd64-static/ffprobe /usr/local/bin/
       SecurityGroupIds:
         - !Ref InstanceSecurityGroup
       Tags:
