@@ -17,14 +17,7 @@ def after_request(response):
 
 # Configurações AWS
 S3_BUCKET = 'leitura-arquivo-teste'
-AWS_ACCESS_KEY = 'ASIARTIHORATI27BL6VD'
-AWS_SECRET_KEY = 'uZSpCl4247yX4jobWt8DvKBooNFXT6XZdgcceg8m'
-AWS_SESSION_KEY = 'IQoJb3JpZ2luX2VjEKj//////////wEaCXVzLXdlc3QtMiJIMEYCIQD0/RdFNJAt92z97mZOk9sskJ8xOe6nxBUInen4pUlCRAIhANneKlbHBmhywkacu+jXmyytHU+ECFTmwvZ1qcHkI/0+KrQCCIH//////////wEQARoMMTEwMDc0MTY5MzgyIgxjUUwibdK+Ky143tUqiAJR0obiktZ0TVfWOgN0rglEMHcaMKBobUEvRDM6ruFH1PotlW/UpXLLDlQVVOjuK5/5pN1j5lkW5FrUOuYGFWbM+8srAk5lfmVFRwoE6d+psAiUqQV8q4Dg1o/BcEBNteNC8GbfTnv/XxorQZNO1/rWM3z4gCtepSbPE4ue6o+9jcHB/c8WaNPNDnovxi6NB7HhHsz/3UNsME0Q/LaO/65gARunZjjWO8Z0EH5Jz88zmZGcKA7bQ3LkNMDF2h+McNCERtfS/oY51K3q2SXh+NCsdtSUBikLCU7IVUnRx1ml09N6AlgQtcCOy3c7iYoSj+WkfbZTG50c6az2Y6zUIgL3Bob0kiYaYzgwrdv7tAY6nAFiE7DoMn25XAXKO1vQ9cyrOj4vIRDB/sP/1ZtH6ta1LQ3Z7zLRa1hvDhZoajA+3k+5Bk7Jp4E9gOybssP6GRnSJEw2cGF24M0QrwACqMm8Hj9EMnbz8UGOASLKGOnZ48ua/AHjh8U/J9X6XMIkP8cP+57ee8pG8103re0WhYifRMFyON0whU41soHFKGUNL83bug0UDtDarJYTFW0='
-
-s3 = boto3.client('s3',
-                  aws_access_key_id=AWS_ACCESS_KEY,
-                  aws_secret_access_key=AWS_SECRET_KEY,
-                  aws_session_token=AWS_SESSION_KEY)
+s3 = boto3.client('s3')
 
 @app.route('/upload/<codigo>', methods=['POST'])
 @swag_from({

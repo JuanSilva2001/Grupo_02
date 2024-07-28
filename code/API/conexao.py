@@ -1,9 +1,9 @@
 import mysql.connector
 
 mydb = mysql.connector.connect(
-    host="localhost",
-    user='root',
-    password='S@opaulo18',
+    host="database-3.cpeta6jvoozv.us-east-1.rds.amazonaws.com",
+    user='admin',
+    password='urubu100',
     database="no_copy"
 )
 mycursor = mydb.cursor()
