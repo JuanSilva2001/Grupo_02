@@ -1,0 +1,122 @@
+/* body {
+    font-family: 'Arial', sans-serif;
+    background-color: #0c3c3f;
+    color: #d2f8f2;
+    margin: 0;
+    padding: 0;
+} */
+
+header {
+    background-color: #122c34;
+    padding: 20px;
+    text-align: center;
+    color: #d2f8f2;
+}
+
+.logo {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2.5em;
+    color: #2ff1a8;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #d2f8f2;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+nav ul li a:hover{
+    cursor: pointer;
+    color: #3ceeaa;
+    transition:500ms;
+    border-bottom: 1px solid#3ceeaa;
+}
+
+/* main {
+    text-align: center;
+    margin: 40px auto;
+    width: 80%;
+} */
+
+h2 {
+    color: #2ff1a8;
+    font-size: 2em;
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+.audio-upload {
+    margin-top: 40px;
+    background-color: #122c34a6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.audio-upload h3 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #2ff1a8;
+}
+
+.audio-upload input[type="file"] {
+    margin-bottom: 20px;
+}
+
+.audio-upload button {
+    padding: 10px 20px;
+    background-color: #2ff1a8;
+    color: #0c3c3f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.audio-upload button:hover {
+    background-color: #28d395;
+}
+
+#status {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #2ff1a8;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #0c3c3f;
+    color: #d2f8f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    text-align: center;
+    margin: 40px auto;
+    width: 80%;
+    flex: 1;
+}
+
+footer {
+    background-color: #122c34;
+    text-align: center;
+    color: #d2f8f2;
+    width: 100%;
+    font-size: 10px;
+    padding: 10px 0;
+}
