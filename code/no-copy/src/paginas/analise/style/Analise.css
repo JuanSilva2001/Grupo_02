@@ -1,0 +1,60 @@
+/* Certifique-se de que o html e body ocupem 100% da altura da viewport */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .analise {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 171px;
+    width: 100%;
+    min-height: 100vh; /* Garante que ocupe no mínimo 100% da altura da viewport */
+    background: var(--Preto-Rico, #071E22);
+    box-sizing: border-box;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 85px;
+    width: 100%;
+    max-width: 1440px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .title {
+    color: var(--azura-web, #E4F1F1);
+    font-family: "JetBrains Mono";
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  @media (max-width: 768px) {
+    .title {
+      font-size: 30px;
+    }
+  
+    .content {
+      gap: 50px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .title {
+      font-size: 24px;
+    }
+  
+    .content {
+      gap: 30px;
+    }
+  }
+  
