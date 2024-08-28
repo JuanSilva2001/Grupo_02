@@ -18,7 +18,7 @@ export const BoxUpload = ({ texto = "Carregue seu arquivo aqui" }) => {
                 type="file"
                 className="upload-input"
                 onChange={handleFileChange}
-                id='Arquivo'
+                id='audioFile'
             />
             <svg
                 className="upload-icon"
