@@ -31,7 +31,7 @@ function Header({ imagemAvatar }) {
       </div>
       <nav className="menu">
         <a href="/" className={`menu-item ${activeMenuItem === '#home' ? 'active' : ''}`} onClick={() => handleMenuClick('#home')}>Home</a>
-        <a href="/Avaliar-Musica" className={`menu-item ${activeMenuItem === '#avaliarLetra' ? 'active' : ''}`} onClick={() => handleMenuClick('#avaliarLetra')}>Avaliar Musica</a>
+        <a href="/Avaliar-Musica" className={`menu-item ${activeMenuItem === '#avaliarLetra' ? 'active' : ''}`} onClick={() => handleMenuClick('#avaliarLetra')}>Avaliar Música</a>
         {!imagemAvatar && (
           <a href="/login" className={`menu-item ${activeMenuItem === '#logar' ? 'active' : ''}`} onClick={() => handleMenuClick('#logar')}>{usuario}</a>
         )}
