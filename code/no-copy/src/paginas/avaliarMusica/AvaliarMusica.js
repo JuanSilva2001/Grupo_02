@@ -8,7 +8,7 @@ import api from '../../api'
 
 const AvaliarMusica = () => {
   async function enviar() {
-        alert('Funcionando')
+        // alert('Funcionando')
         const fileInput = document.getElementById('audioFile');
         const file = fileInput.files[0];
         const reader = new FileReader();
@@ -22,7 +22,7 @@ const AvaliarMusica = () => {
                         'Content-Type': 'audio/mpeg', // Ensure this matches the expected MIME type
                     },
                 });
-                alert(response)
+                // alert(response)
 
                 const result = await response.text(); // Get the response text
 
@@ -33,7 +33,7 @@ const AvaliarMusica = () => {
                 }
             } catch (error) {
                 console.error('Erro ao enviar o áudio:', error); // Log the error
-                alert(`Ocorreu um erro ao enviar o áudio: ${error.message}`);
+                // alert(`Ocorreu um erro ao enviar o áudio: ${error.message}`);
             }
         };
 
