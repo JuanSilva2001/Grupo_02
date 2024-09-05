@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent the default form behavior
 
-        const fileInput = document.getElementById('audioFile');
+        const fileInput = document.getElementById('file');
         const file = fileInput.files[0];
 
-        // if (!file) {
-        //     statusDiv.textContent = 'Por favor, selecione um arquivo de áudio.';
-        //     return;
-        // }
+        if (!file) {
+            statusDiv.textContent = 'Por favor, selecione um arquivo de áudio.';
+            return;
+        }
 
         // Create a FileReader to read the file as ArrayBuffer
         const reader = new FileReader();
