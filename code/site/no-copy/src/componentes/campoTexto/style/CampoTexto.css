@@ -1,0 +1,38 @@
+.campo-texto {
+    display: flex;
+    width: 90%;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+    gap: var(--sm, 8px);
+    border-radius: var(--border-radius-sm, 8px);
+    border: 1px solid var(--Hortel, #09BC8A);
+    font-family: "JetBrains Mono";
+    font-size: 16px;
+    color: var(--gray-scale-Gray-400, #ADB5BD);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  .campo-texto::placeholder {
+    color: var(--gray-scale-Gray-400, #ADB5BD);
+  }
+  
+  .campo-texto:hover {
+    border-color: var(--Hortel-hover, #58A4B0); /* Cor do contorno ao passar o mouse */
+  }
+  
+  .campo-texto:focus {
+    outline: none;
+    border-color: var(--Hortel-focus, #075955); /* Cor do contorno ao focar */
+    transform: scale(1.01); /* Efeito de escala ao focar */
+  }
+  
+  @media (max-width: 768px) {
+    .box-login {
+      width: 90%; /* Ocupa 90% da largura disponível */
+      max-width: 99%; /* Define uma largura máxima menor para telas menores */
+      height: auto; /* Ajusta a altura automaticamente conforme necessário */
+      padding: 16px;
+    }
+  }

@@ -1,0 +1,43 @@
+/* BoxCadastro.css */
+
+.box-cadastro {
+    width: 473px;
+    max-width: 100%; /* Garante que não ultrapasse a largura máxima da tela */
+    height: 715px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: var(--Verde-meia-noite, #004346);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: var(--azura-web, #E4F1F1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto; /* Centraliza horizontalmente na página */
+  }
+  
+  .box-cadastro form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .box-cadastro label {
+    font-size: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    .box-cadastro {
+      width: 90%;
+      height: auto;
+      padding: 16px;
+    }
+  
+    .box-cadastro input,
+    .box-cadastro button {
+      font-size: 12px;
+    }
+  }
+  
