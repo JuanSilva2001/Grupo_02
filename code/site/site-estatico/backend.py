@@ -13,10 +13,11 @@ app = Flask(__name__)
 from flask_cors import CORS
 CORS(app)
 
-nltk.data.path.append('/home/ubuntu/Grupo_02/code/site/site-estatico/myenv/lib/python3.12/site-packages/nltk/tokenize')
+nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
+nltk.download('punkt_tab')
 
 stop_words = set(stopwords.words('english'))
 wnet = nltk.WordNetLemmatizer()
