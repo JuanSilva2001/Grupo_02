@@ -13,7 +13,7 @@ app = Flask(__name__)
 from flask_cors import CORS
 CORS(app)
 
-nltk.download('punkt')
+nltk.data.path.append('/home/ubuntu/Grupo_02/code/site/site-estatico/myenv/lib/python3.12/site-packages/nltk/tokenize')
 nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
