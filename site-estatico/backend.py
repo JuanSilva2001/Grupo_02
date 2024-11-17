@@ -27,8 +27,8 @@ genres = ['Country', 'Rap', 'Rock']
 loaded_models = {genre: joblib.load(f'./models/{genre}_model.joblib') for genre in genres}
 vectorize = joblib.load('./models/tfidf_vectorizer.joblib')
 
-with open("./models/vectorize_2.pkl", "rb") as f:
-    vectorize_2 = pickle.load(f)
+with open("./models/vectorize_model.pkl", "rb") as f:
+    vectorize_model = pickle.load(f)
 
 with open("./models/songs.pkl", "rb") as f:
     songs, vectors = pickle.load(f)
@@ -48,7 +48,7 @@ def preprocess_text(text):
 
 def prever_musicas_parecidas(letra_nova, num_resultados=3):
     # Transform the new lyrics using the same vectorizer
-    letra_nova_vector = vectorize_2.transform([letra_nova])  # Wrap in a list
+    letra_nova_vector = vectorize_model.transform([letra_nova])  # Wrap in a list
     similaridade = cosine_similarity(letra_nova_vector, vectors).flatten()
     indices_similares = similaridade.argsort()[::-1][:num_resultados]
 
