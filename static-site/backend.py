@@ -9,6 +9,9 @@ import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from itertools import chain
+import librosa
+import numpy as np
+import os
 
 app = Flask(__name__)
 from flask_cors import CORS
@@ -24,13 +27,15 @@ stop_words = set(stopwords.words('english'))
 wnet = nltk.WordNetLemmatizer()
 
 genres = ['Country', 'Rap', 'Rock']
-loaded_models = {genre: joblib.load(f'./models/{genre}_model.joblib') for genre in genres}
-vectorize = joblib.load('./models/tfidf_vectorizer.joblib')
+loaded_models = {genre: joblib.load(f'./static-site/models/{genre}_model.joblib') for genre in genres}
+vectorize = joblib.load('./static-site/models/tfidf_vectorizer.joblib')
+scaler = joblib.load('./static-site/models/scaler.pkl')
+knn_model = joblib.load('./static-site/models/knn_model.pkl')
 
-with open("./models/vectorize_model.pkl", "rb") as f:
+with open("./static-site/models/vectorize.pkl", "rb") as f:
     vectorize_model = pickle.load(f)
 
-with open("./models/songs.pkl", "rb") as f:
+with open("./static-site/models/songs.pkl", "rb") as f:
     songs, vectors = pickle.load(f)
 
 def preprocess_text(text):
@@ -40,15 +45,12 @@ def preprocess_text(text):
     clean_vec = [[word for word in lyr if word.isalpha()] for lyr in stop_vec]
     lem = [[wnet.lemmatize(w) for w in lyr] for lyr in clean_vec]
     
-    # Create a list of cleaned lyrics from the lemmatized words
     lyrics_tay = [' '.join(lyr) for lyr in lem]
 
-    # Make sure to return a list of strings
     return vectorize.transform(lyrics_tay)
 
 def prever_musicas_parecidas(letra_nova, num_resultados=3):
-    # Transform the new lyrics using the same vectorizer
-    letra_nova_vector = vectorize_model.transform([letra_nova])  # Wrap in a list
+    letra_nova_vector = vectorize_model.transform([letra_nova])
     similaridade = cosine_similarity(letra_nova_vector, vectors).flatten()
     indices_similares = similaridade.argsort()[::-1][:num_resultados]
 
@@ -94,6 +96,40 @@ def predict_lyric():
     }
 
     return jsonify(result)
+
+def extract_features(audio_path):
+    y, sr = librosa.load(audio_path, sr=None)
+
+    spectral_centroid = librosa.feature.spectral_centroid(y=y, sr=sr)
+    avg_frequency = np.mean(spectral_centroid)
+
+    duration = librosa.get_duration(y=y, sr=sr)
+
+    return [avg_frequency, duration]
+
+@app.route('/upload', methods=['POST'])
+def upload_audio():
+    if 'file' not in request.files:
+        return jsonify({'error': 'Nenhum arquivo foi enviado'}), 400
+
+    file = request.files['file']
+
+    temp_path = os.path.join('temp', file.filename)
+    os.makedirs('temp', exist_ok=True)
+    file.save(temp_path)
+
+    try:
+        features = extract_features(temp_path)
+        
+        features_scaled = scaler.transform([features])
+        
+        prediction = knn_model.predict(features_scaled)
+        
+        os.remove(temp_path)
+        
+        return jsonify({'prediction': prediction[0]})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
