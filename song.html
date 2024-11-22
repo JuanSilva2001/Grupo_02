@@ -1,0 +1,260 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No Copy</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <header>
+    <h1 class="logo">No Copy.</h1>
+    <nav>
+      <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./song.html">Avaliar</a></li>
+        <li><a href="./genre.html">Letra</a></li>
+        <li><a href="./analytics.html">Analytics</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="audio-upload" enctype="multipart/form-data">
+      <h3>Envie seu Áudio para Avaliação</h3>
+      <br /><br />
+      <form id="audioForm">
+        <input type="file" name="file" id="file" class="inputfile" accept="audio/*" required />
+        <label for="file"><img src="./upload.png" height="30px" width="30px" /></label>
+        <br />
+        <br />
+        <p>
+          Após a música ser processada por um sistema de análise, o algoritmo
+          irá comparar as características da faixa, como melodia, harmonia e
+          ritmo, com um banco de dados de músicas existentes. Com base nessas
+          comparações, o sistema identificará e retornará uma lista de
+          possíveis plágios, destacando trechos específicos que podem ter
+          semelhanças significativas com outras obras registradas. Dessa
+          forma, é possível avaliar se a música original infringe ou não os
+          direitos autorais de outras composições.
+        </p>
+        <button type="submit">Enviar Áudio</button>
+      </form>
+
+      <div id="fileStatus" style="display: none;">
+        <h4>Arquivo de Áudio Escolhido:</h4>
+        <p id="audioName"></p>
+      </div>
+
+      <div id="status"></div>
+      <div id="loader" style="display: none">
+        <div class="loader-icon"></div>
+        <p>Enviando...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 No Copy. Todos os direitos reservados.</p>
+  </footer>
+</body>
+
+</html>
+
+<script>
+  document.getElementById('file').addEventListener('change', function () {
+    const fileInput = document.getElementById('file');
+    const fileStatus = document.getElementById('fileStatus');
+    const audioName = document.getElementById('audioName');
+
+    if (fileInput.files.length > 0) {
+
+      const file = fileInput.files[0];
+      fileStatus.style.display = 'block';
+      audioName.textContent = `Você escolheu: ${file.name}`;
+    }
+  });
+
+  document.getElementById('audioForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const fileInput = document.getElementById('file');
+    const statusDiv = document.getElementById('status');
+    const loader = document.getElementById('loader');
+
+    if (fileInput.files.length === 0) {
+      statusDiv.textContent = 'Por favor, selecione um arquivo.';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+
+    loader.style.display = 'block';
+    statusDiv.textContent = '';
+
+    try {
+
+      // AWS
+      //  const response = await fetch("http://3.227.38.119:5000/upload", {
+
+      //LOCALHOST
+      const response = await fetch('http://127.0.0.1:5000/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+      loader.style.display = 'none';
+
+      console.log(result.previsao)
+
+      if (response.ok) {
+        let musicName;
+        if (result.previsao === '2' || result.previsao === 2) {
+        musicName = 'dido - thank you';
+      } else if (result.previsao === '4' || result.previsao === 4) {
+        musicName = 'ratos de porão - caos';
+      } else {
+        musicName = 'desconhecido';
+      }
+        statusDiv.textContent = `A música foi classificada como: ${musicName}`;
+      } else {
+        statusDiv.textContent = `Erro: ${result.error}`;
+      }
+    } catch (error) {
+      loader.style.display = 'none';
+      statusDiv.textContent = `Erro ao enviar o áudio: ${error.message}`;
+    }
+  });
+</script>
+=======
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No Copy</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <header>
+    <h1 class="logo">No Copy.</h1>
+    <nav>
+      <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./song.html">Avaliar</a></li>
+        <li><a href="./genre.html">Letra</a></li>
+        <li><a href="./analytics.html">Analytics</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="audio-upload" enctype="multipart/form-data">
+      <h3>Envie seu Áudio para Avaliação</h3>
+      <br /><br />
+      <form id="audioForm">
+        <input type="file" name="file" id="file" class="inputfile" accept="audio/*" required />
+        <label for="file"><img src="./upload.png" height="30px" width="30px" /></label>
+        <br />
+        <br />
+        <p>
+          Após a música ser processada por um sistema de análise, o algoritmo
+          irá comparar as características da faixa, como melodia, harmonia e
+          ritmo, com um banco de dados de músicas existentes. Com base nessas
+          comparações, o sistema identificará e retornará uma lista de
+          possíveis plágios, destacando trechos específicos que podem ter
+          semelhanças significativas com outras obras registradas. Dessa
+          forma, é possível avaliar se a música original infringe ou não os
+          direitos autorais de outras composições.
+        </p>
+        <button type="submit">Enviar Áudio</button>
+      </form>
+
+      <div id="fileStatus" style="display: none;">
+        <h4>Arquivo de Áudio Escolhido:</h4>
+        <p id="audioName"></p>
+      </div>
+
+      <div id="status"></div>
+      <div id="loader" style="display: none">
+        <div class="loader-icon"></div>
+        <p>Enviando...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 No Copy. Todos os direitos reservados.</p>
+  </footer>
+</body>
+
+</html>
+
+<script>
+  document.getElementById('file').addEventListener('change', function () {
+    const fileInput = document.getElementById('file');
+    const fileStatus = document.getElementById('fileStatus');
+    const audioName = document.getElementById('audioName');
+
+    if (fileInput.files.length > 0) {
+
+      const file = fileInput.files[0];
+      fileStatus.style.display = 'block';
+      audioName.textContent = `Você escolheu: ${file.name}`;
+    }
+  });
+
+  document.getElementById('audioForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const fileInput = document.getElementById('file');
+    const statusDiv = document.getElementById('status');
+    const loader = document.getElementById('loader');
+
+    if (fileInput.files.length === 0) {
+      statusDiv.textContent = 'Por favor, selecione um arquivo.';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+
+    loader.style.display = 'block';
+    statusDiv.textContent = '';
+
+    try {
+
+      // AWS
+      //  const response = await fetch("http://3.227.38.119:5000/upload", {
+
+      //LOCALHOST
+      const response = await fetch('http://127.0.0.1:5000/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+      loader.style.display = 'none';
+
+      console.log(result.previsao)
+
+      setTimeout(console.log("0"), 2000);
+      if (response.ok) {
+        statusDiv.textContent = `A música foi classificada como: ${result.previsao}`;
+      } else {
+        statusDiv.textContent = `Erro: ${result.error}`;
+      }
+    } catch (error) {
+      loader.style.display = 'none';
+      statusDiv.textContent = `Erro ao enviar o áudio: ${error.message}`;
+    }
+  });
+</script>
+>>>>>>> f6023270955ad7c1cedf16854a885e6cfaadf121
