@@ -22,6 +22,7 @@ nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 nltk.download('omw-1.4')
+nltk.download('punkt_tab')
 
 stop_words = set(stopwords.words('english'))
 wnet = nltk.WordNetLemmatizer()
@@ -118,18 +119,26 @@ def upload_audio():
     os.makedirs('temp', exist_ok=True)
     file.save(temp_path)
 
-    try:
-        features = extract_features(temp_path)
-        
-        features_scaled = scaler.transform([features])
-        
-        prediction = knn_model.predict(features_scaled)
-        
-        os.remove(temp_path)
-        
-        return jsonify({'prediction': prediction[0]})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    print(f"Arquivo salvo em: {temp_path}")
+
+    features = extract_features(temp_path)
+    print(f"Características extraídas: {features}")
+
+    features_scaled = scaler.transform([features])
+    print(f"Características escaladas: {features_scaled}")
+
+    prediction = knn_model.predict(features_scaled)
+    print(f"Previsão: {prediction[0]}")
+
+    os.remove(temp_path)
+
+    result = {
+        'previsao': int(prediction[0])
+    }
+
+    return jsonify(result)
+    
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

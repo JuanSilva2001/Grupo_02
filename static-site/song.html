@@ -41,14 +41,18 @@
           direitos autorais de outras composições.
         </p>
         <button type="submit">Enviar Áudio</button>
-
       </form>
+
+      <div id="fileStatus" style="display: none;">
+        <h4>Arquivo de Áudio Escolhido:</h4>
+        <p id="audioName"></p>
+      </div>
+
       <div id="status"></div>
       <div id="loader" style="display: none">
         <div class="loader-icon"></div>
         <p>Enviando...</p>
       </div>
-
     </section>
   </main>
 
@@ -60,6 +64,19 @@
 </html>
 
 <script>
+  document.getElementById('file').addEventListener('change', function () {
+    const fileInput = document.getElementById('file');
+    const fileStatus = document.getElementById('fileStatus');
+    const audioName = document.getElementById('audioName');
+
+    if (fileInput.files.length > 0) {
+
+      const file = fileInput.files[0];
+      fileStatus.style.display = 'block';
+      audioName.textContent = `Você escolheu: ${file.name}`;
+    }
+  });
+
   document.getElementById('audioForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -79,6 +96,11 @@
     statusDiv.textContent = '';
 
     try {
+
+      // AWS
+      //  const response = await fetch("http://3.227.38.119:5000/upload", {
+
+      //LOCALHOST
       const response = await fetch('http://127.0.0.1:5000/upload', {
         method: 'POST',
         body: formData,
@@ -87,8 +109,11 @@
       const result = await response.json();
       loader.style.display = 'none';
 
+      console.log(result.previsao)
+
+      setTimeout(console.log("0"), 2000);
       if (response.ok) {
-        statusDiv.textContent = `A música foi classificada como: ${result.prediction}`;
+        statusDiv.textContent = `A música foi classificada como: ${result.previsao}`;
       } else {
         statusDiv.textContent = `Erro: ${result.error}`;
       }
@@ -97,5 +122,4 @@
       statusDiv.textContent = `Erro ao enviar o áudio: ${error.message}`;
     }
   });
-
 </script>
