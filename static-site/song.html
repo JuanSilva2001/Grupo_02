@@ -114,13 +114,20 @@
       if (response.ok) {
         let musicName;
         if (result.previsao === '2' || result.previsao === 2) {
-        musicName = 'dido - thank you';
+        musicName = 'Dido - Thank you';
+      } else if (result.previsao === '3' || result.previsao === 3) {
+        musicName = 'Assovio Carol';
+      } else if (result.previsao === '1' || result.previsao === 1) {
+        musicName = 'Assovio João Nunes';
       } else if (result.previsao === '4' || result.previsao === 4) {
-        musicName = 'ratos de porão - caos';
-      } else {
-        musicName = 'desconhecido';
+        musicName = 'Ratos de Porão - Caos';
+      } else if (result.previsao === '5' || result.previsao === 5) {
+        musicName = 'Ratos de Porão (Cover) - Caos';
+      } else if (result.previsao === '0' || result.previsao === 0) {
+        musicName = 'Assovio Matheus';
       }
-        statusDiv.textContent = `A música foi classificada como: ${musicName}`;
+
+        statusDiv.textContent = `A música tem alta chance de ser parecida com : ${musicName}`;
       } else {
         statusDiv.textContent = `Erro: ${result.error}`;
       }

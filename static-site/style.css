@@ -198,3 +198,12 @@ textarea {
     justify-content: space-between;
     width: 100%;
 }
+
+.analytics-dash-harm{
+    margin-top: 40px;
+    background-color: #122c34a6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+    width: 100%;
+}

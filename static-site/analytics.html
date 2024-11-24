@@ -25,6 +25,10 @@
         <h3>Modelos de Genêro Musical</h3>
       <section class="analytics-dash" id="results">
       </section>
+      <br>
+        <h3>Modelo Harmônico</h3>
+      <section class="analytics-dash-harm" id="resultsharm">
+      </section>
     </main>
 
     <footer>
@@ -67,40 +71,18 @@
     },
   ];
 
-//   {
-//       genre: "Country",
-//       accuracy: 0.8253333333333334,
-//       precision: 0.6262626262626263,
-//       recall: 0.21602787456445993,
-//       confusionMatrix: [
-//         [3528, 111],
-//         [675, 186],
-//       ],
-//     },
-//     {
-//       genre: "Rock",
-//       accuracy: 0.7206666666666667,
-//       precision: 0.5460434983803795,
-//       recall: 0.8104395604395604,
-//       confusionMatrix: [
-//         [2063, 981],
-//         [276, 1180],
-//       ],
-//     },
-//     {
-//       genre: "Rap",
-//       accuracy: 0.9042222222222223,
-//       precision: 0.7940761636107193,
-//       recall: 0.6639150943396226,
-//       confusionMatrix: [
-//         [3506, 146],
-//         [285, 563],
-//       ],
-//     },
-//   ];
+  const jsonDataHarm = [
+    {
+      genre: "Harmonic",
+      accuracy: '89.66%',
+      precision: '66%',
+      recall: '62%'
+    }
+  ];
 
-  function displayResults(data) {
+  function displayResults(data, dataharm) {
     const resultsSection = document.getElementById("results");
+    const resultsSectionharm = document.getElementById("resultsharm");
 
     data.forEach((result) => {
       const resultDiv = document.createElement("div");
@@ -126,7 +108,21 @@
 
       resultsSection.appendChild(resultDiv);
     });
+
+    dataharm.forEach((results) => {
+      const resultsDiv = document.createElement("div");
+      resultsDiv.classList.add("results");
+
+      resultsDiv.innerHTML = `
+      <h2>${results.genre} Model:</h2>
+      <p><strong>Accuracy:</strong> ${results.accuracy}</p>
+      <p><strong>Precision:</strong> ${results.precision}</p>
+      <p><strong>Recall:</strong> ${results.recall}</p>
+    `;
+
+    resultsSectionharm.appendChild(resultsDiv);
+    });
   }
 
-  displayResults(jsonData);
+  displayResults(jsonData, jsonDataHarm);
 </script>
