@@ -28,16 +28,16 @@ stop_words = set(stopwords.words('english'))
 wnet = nltk.WordNetLemmatizer()
 
 genres = ['Country', 'Rap', 'Rock']
-loaded_models = {genre: joblib.load(f'./static-site/models/{genre}_model.joblib') for genre in genres}
-vectorize = joblib.load('./static-site/models/tfidf_vectorizer.joblib')
-scaler = joblib.load('./static-site/models/scaler.pkl')
-knn_model = joblib.load('./static-site/models/knn_model.pkl')
+loaded_models = {genre: joblib.load(f'./models/{genre}_model.joblib') for genre in genres}
+vectorize = joblib.load('./models/tfidf_vectorizer.joblib')
+scaler = joblib.load('./models/scaler.pkl')
+knn_model = joblib.load('./models/knn_model.pkl')
 
-with open("./static-site/models/vectorize.pkl", "rb") as f:
+with open("./models/vectorize.pkl", "rb") as f:
     vectorize_model = pickle.load(f)
 
-with open("./static-site/models/songs.pkl", "rb") as f:
-    songs, vectors = pickle.load(f)
+# with open("./models/songs.pkl", "rb") as f:
+#     songs, vectors = pickle.load(f)
 
 def preprocess_text(text):
     df = pd.DataFrame({'lyrics': [text]})
