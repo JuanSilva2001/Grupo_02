@@ -1,134 +1,127 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>No Copy</title>
+    <link rel="stylesheet" href="./style.css" />
+    
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>No Copy</title>
-  <link rel="stylesheet" href="./style.css" />
+  <body>
+    <header>
+      <h1 class="logo">No Copy.</h1>
+      <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./song.html">Avaliar</a></li>
+            <li><a href="./genre.html">Letra</a></li>
+            <li><a href="./analytics.html">Analytics</a></li>
+        </ul>
+      </nav>
+    </header>
 
-</head>
+    <main>
+      <section class="audio-upload">
+        <h3>Envie a letra para a avaliação</h3>
 
-<body>
-  <header>
-    <h1 class="logo">No Copy.</h1>
-    <nav>
-      <ul>
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./song.html">Avaliar</a></li>
-        <li><a href="./genre.html">Letra</a></li>
-        <li><a href="./analytics.html">Analytics</a></li>
-      </ul>
-    </nav>
-  </header>
+        <form id="predictionForm">
+          <label for="lyrics">Insira a letra da música:</label>
+          <br>
+          <br>
+          <textarea id="lyrics" name="lyrics" rows="10" cols="50"></textarea
+          ><br /><br />
 
-  <main>
-    <section class="audio-upload">
-      <h3>Envie a letra para a avaliação</h3>
+          <button type="submit">Analisar</button>
+        </form>
 
-      <form id="predictionForm">
-        <label for="lyrics">Insira a letra da música:</label>
-        <br>
-        <br>
-        <textarea id="lyrics" name="lyrics" rows="10" cols="50"></textarea><br /><br />
+        <h3>Resultado:</h3>
+        <ul id="genreProbabilities"></ul>
+        <ul id="similarSongs"></ul>
+      </section>
+    </main>
 
-        <button type="submit">Analisar</button>
-      </form>
+    <footer>
+      <p>&copy; 2024 No Copy. Todos os direitos reservados.</p>
+    </footer>
 
-      <h3>Resultado:</h3>
-      <ul id="genreProbabilities"></ul>
-      <ul id="similarSongs"></ul>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2024 No Copy. Todos os direitos reservados.</p>
-  </footer>
-
-  <script>
-    document
-      .getElementById("predictionForm")
-      .addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const lyrics = document.getElementById("lyrics").value;
-
-        const data = { lyrics: lyrics };
-
-        try {
-          // AWS
-          //  const response = await fetch("http://3.227.38.119:5000/predict_lyric", {
-
-          //LOCALHOST
-          // Chamada para a primeira API
-          const response = await fetch("http://127.0.0.1:5000/predict_lyric", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
-
-          const result = await response.json();
-
-          console.log(result);
-
-          const probabilities = result.probabilities;
-          const similarSongs = result.similar_songs;
-
-          // Exibir resultado da primeira API
-          const genreList = document.getElementById("genreProbabilities");
-          genreList.innerHTML = "";
-
-          let maxProbability = 0;
-          let classifiedGenre = "";
-
-          for (const genre in probabilities) {
-            const probability = probabilities[genre] * 100;
-
-            if (probability > maxProbability) {
-              maxProbability = probability;
-              classifiedGenre = genre;
-            }
-          }
-
-          if (classifiedGenre) {
-            genreList.innerHTML += `<p>Sua música foi classificada como <b>${classifiedGenre}</b> com ${maxProbability.toFixed(
-              2
-            )}% de acordo com a análise.</p>`;
-          }
-
-          const similarSongsList = document.getElementById("similarSongs");
-          similarSongsList.innerHTML = `<h3>Música mais parecida</h3><p><b>${similarSongs.musica_mais_parecida}</b> com ${similarSongs.similaridade.toFixed(
-            2
-          )}% de similaridade</p>`;
-
-          const secondApiData = {
-            classifiedGenre: classifiedGenre,
-            maxProbability: maxProbability.toFixed(2),
-            similarSong: similarSongs.musica_mais_parecida,
-            similarity: similarSongs.similaridade.toFixed(2),
-          };
-
-          const secondApiResponse = await fetch(
-            "https://3jzrnybrq3.execute-api.us-east-1.amazonaws.com/dev/send",
-            {
+    <script>
+      document
+        .getElementById("predictionForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+    
+          const lyrics = document.getElementById("lyrics").value;
+    
+          const data = { lyrics: lyrics };
+    
+          try {
+            // Enviar para a API de predição local
+            const response = await fetch("http://127.0.0.1:5000/predict_lyric", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(secondApiData),
+              body: JSON.stringify(data),
+            });
+    
+            const result = await response.json();
+            console.log(result);
+    
+            const probabilities = result.probabilities;
+            const similarSongs = result.similar_songs;
+    
+            // Exibir probabilidades de gênero
+            const genreList = document.getElementById("genreProbabilities");
+            genreList.innerHTML = "";
+    
+            let maxProbability = 0;
+            let classifiedGenre = "";
+    
+            for (const genre in probabilities) {
+              const probability = probabilities[genre] * 100;
+    
+              if (probability > maxProbability) {
+                maxProbability = probability;
+                classifiedGenre = genre;
+              }
             }
-          );
-
-          const secondApiResult = await secondApiResponse.json();
-          console.log("Resposta da segunda API:", secondApiResult);
-        } catch (error) {
-          console.error("Erro ao chamar a API:", error);
-        }
-      });
-  </script>
-
-</body>
-
+    
+            if (classifiedGenre) {
+              const genreProbabilities = document.getElementById("genreProbabilities");
+              genreProbabilities.innerHTML += `<p>Sua música foi classificada como <b>${classifiedGenre}</b> com ${maxProbability.toFixed(
+                2
+              )}% de acordo com a análise.</p>`;
+            }
+    
+            // Exibir músicas similares
+            const similarSongsList = document.getElementById("similarSongs");
+            similarSongsList.innerHTML = `<h3>Música mais parecida</h3><p><b>${similarSongs.musica_mais_parecida}</b> com ${similarSongs.similaridade.toFixed(2)}% de similaridade</p>`;
+    
+            // Preparar os dados para enviar para o endpoint AWS
+            const songData = {
+              genre: classifiedGenre,
+              similaritySong: similarSongs.musica_mais_parecida,
+              similarityScore: similarSongs.similaridade,
+            };
+    
+            // Enviar os dados para o endpoint AWS
+            const awsResponse = await fetch("https://f6du96p34c.execute-api.us-east-1.amazonaws.com/dev/send-songs", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(songData),
+            });
+    
+            const awsResult = await awsResponse.json();
+            console.log("Resposta da API AWS:", awsResult);
+    
+          } catch (error) {
+            console.error("Erro ao chamar a API:", error);
+          }
+        });
+    </script>    
+    
+  </body>
 </html>
