@@ -70,7 +70,6 @@
     const audioName = document.getElementById('audioName');
 
     if (fileInput.files.length > 0) {
-
       const file = fileInput.files[0];
       fileStatus.style.display = 'block';
       audioName.textContent = `Você escolheu: ${file.name}`;
@@ -90,17 +89,17 @@
     }
 
     const formData = new FormData();
-    formData.append('file', fileInput.files[0]);
+    const file = fileInput.files[0];
+    formData.append('file', file);
 
     loader.style.display = 'block';
     statusDiv.textContent = '';
 
     try {
+        // AWS
+        //  const response = await fetch("http://3.227.38.119:5000/upload", {
 
-      // AWS
-      //  const response = await fetch("http://3.227.38.119:5000/upload", {
-
-      //LOCALHOST
+        //LOCALHOST
       const response = await fetch('http://127.0.0.1:5000/upload', {
         method: 'POST',
         body: formData,
@@ -109,31 +108,49 @@
       const result = await response.json();
       loader.style.display = 'none';
 
-      console.log(result.previsao)
-
       if (response.ok) {
         let musicName;
         if (result.previsao === '2' || result.previsao === 2) {
-        musicName = 'Dido - Thank you';
-      } else if (result.previsao === '3' || result.previsao === 3) {
-        musicName = 'Assovio Carol';
-      } else if (result.previsao === '1' || result.previsao === 1) {
-        musicName = 'Assovio João Nunes';
-      } else if (result.previsao === '4' || result.previsao === 4) {
-        musicName = 'Ratos de Porão - Caos';
-      } else if (result.previsao === '5' || result.previsao === 5) {
-        musicName = 'Ratos de Porão (Cover) - Caos';
-      } else if (result.previsao === '0' || result.previsao === 0) {
-        musicName = 'Assovio Matheus';
+          musicName = 'Dido - Thank you';
+        } else if (result.previsao === '3' || result.previsao === 3) {
+          musicName = 'Assovio Carol';
+        } else if (result.previsao === '1' || result.previsao === 1) {
+          musicName = 'Assovio João Nunes';
+        } else if (result.previsao === '4' || result.previsao === 4) {
+          musicName = 'Ratos de Porão - Caos';
+        } else if (result.previsao === '5' || result.previsao === 5) {
+          musicName = 'Ratos de Porão (Cover) - Caos';
+        } else if (result.previsao === '0' || result.previsao === 0) {
+          musicName = 'Assovio Matheus';
+        }
+
+        console.log("passou por aqui")
+
+        statusDiv.textContent = `A música tem alta chance de ser parecida com: ${musicName}`;
+
+        const payload = {
+          fileName: file.name,
+          music: musicName, 
+        };
+
+        const saveResponse = await fetch('https://3jzrnybrq3.execute-api.us-east-1.amazonaws.com/dev/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (saveResponse.ok) {
+          console.log("Deu certo")
+        } else {
+          console.log("Deu errado")
+        }
+      } else {
+        console.log("Deu errado")
       }
 
-        statusDiv.textContent = `A música tem alta chance de ser parecida com : ${musicName}`;
-      } else {
-        statusDiv.textContent = `Erro: ${result.error}`;
-      }
     } catch (error) {
       loader.style.display = 'none';
-      statusDiv.textContent = `Erro ao enviar o áudio: ${error.message}`;
+      console.log(`Erro ao enviar o áudio: ${error.message}`);
     }
   });
 </script>

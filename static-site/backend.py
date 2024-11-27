@@ -36,8 +36,8 @@ knn_model = joblib.load('./models/knn_model.pkl')
 with open("./models/vectorize.pkl", "rb") as f:
     vectorize_model = pickle.load(f)
 
-# with open("./models/songs.pkl", "rb") as f:
-#     songs, vectors = pickle.load(f)
+with open("./models/songs.pkl", "rb") as f:
+    songs, vectors = pickle.load(f)
 
 def preprocess_text(text):
     df = pd.DataFrame({'lyrics': [text]})
